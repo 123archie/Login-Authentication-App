@@ -7,18 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-//import android.widget.SimpleAdapter;
+
 import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.hbb20.CountryCodePicker;
+
 
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
-
+String email;
+String password;
     private static  final Pattern PASSWORD_PATTERN=
         Pattern.compile("^" +
                 "(?=.*[0-9])" +
@@ -70,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
            confirmPassword();
            if(validateEmail() && validatePassword() && confirmPassword()){
            Intent intent=new Intent(MainActivity.this, LoginactivityOtpverificationActivity.class);
+
            intent.putExtra("phone",ccp.getFullNumberWithPlus().trim());
+           
            startActivity(intent);
 
             }}
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         private boolean validateEmail()
     {
-            String  email=editTextTextEmailAddress.getText().toString();
+           email=editTextTextEmailAddress.getText().toString();
             if(EMAIL_ADDRESS.matcher(email).matches()){
                textView9.setText("");
                return true;
@@ -91,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             }
     }
  private boolean validatePassword(){
-     String password = editTextTextPassword.getText().toString();
+     password = editTextTextPassword.getText().toString();
      if(PASSWORD_PATTERN.matcher(password).matches())
         {
          textView4.setText("");
@@ -113,6 +116,5 @@ public class MainActivity extends AppCompatActivity {
             return  false;}
     }
 
-    private class CountryCodePicker {
-    }
+
 }
