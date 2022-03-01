@@ -17,9 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -33,7 +35,7 @@ String password;
 private PinView pinView;
     private TextView textView13;
   private Button btn;
-
+private Button btn2;
   String phone;
   String otpid;
     FirebaseAuth mAuth;
@@ -44,8 +46,9 @@ private PinView pinView;
        pinView= findViewById(R.id.pinView);
         textView13=findViewById(R.id.textView13);
         btn=findViewById(R.id.button4);
+        btn2=findViewById(R.id.button2);
         mAuth=FirebaseAuth.getInstance();
-
+        btn2.setEnabled(false);
         phone= getIntent().getStringExtra("phone");
 
         initiate_otp();
@@ -71,11 +74,38 @@ private PinView pinView;
             @Override
             public void onVerificationCompleted(@NonNull PhoneAuthCredential credential) {
                 signInWithPhoneAuthCredential(credential);
-            }
 
+            }
             @Override
             public void onVerificationFailed(@NonNull FirebaseException e) {
-                Toast.makeText(LoginactivityOtpverificationActivity.this, "Verification Failed", Toast.LENGTH_SHORT).show();
+                if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    Toast.makeText(LoginactivityOtpverificationActivity.this, "Invalid Request", Toast.LENGTH_SHORT).show();
+                } else if (e instanceof FirebaseTooManyRequestsException) {
+                    Toast.makeText(LoginactivityOtpverificationActivity.this, "The SMS quota for the plan has been exceeded", Toast.LENGTH_SHORT).show();
+                }
+
+                else{
+                    btn2.setEnabled(true);
+                    btn2.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {PhoneAuthProvider.ForceResendingToken token;
+                            private void resendVerificationCode(phone,
+                                    PhoneAuthProvider.ForceResendingToken token) {
+
+                                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                                        phone,        // Phone number to verify
+                                        60,                 // Timeout duration
+                                        TimeUnit.SECONDS,   // Unit of timeout
+                                        this,               // Activity (for callback binding)
+                                        mCallbacks,         // OnVerificationStateChangedCallbacks
+                                        token);             // ForceResendingToken from callbacks
+                            }
+                                         ForceResendingToken from callbacks
+                            }
+                        });
+//
+                }
+
             }
             @Override
 
