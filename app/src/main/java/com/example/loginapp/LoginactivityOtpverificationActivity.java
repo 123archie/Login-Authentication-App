@@ -84,27 +84,28 @@ private Button btn2;
                     Toast.makeText(LoginactivityOtpverificationActivity.this, "The SMS quota for the plan has been exceeded", Toast.LENGTH_SHORT).show();
                 }
 
-                else{
-                    btn2.setEnabled(true);
-                    btn2.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {PhoneAuthProvider.ForceResendingToken token;
-                            private void resendVerificationCode(phone,
-                                    PhoneAuthProvider.ForceResendingToken token) {
-
-                                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                                        phone,        // Phone number to verify
-                                        60,                 // Timeout duration
-                                        TimeUnit.SECONDS,   // Unit of timeout
-                                        this,               // Activity (for callback binding)
-                                        mCallbacks,         // OnVerificationStateChangedCallbacks
-                                        token);             // ForceResendingToken from callbacks
-                            }
-                                         ForceResendingToken from callbacks
-                            }
-                        });
+//                else {
+//                    btn2.setEnabled(true);
+//                    btn2.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {PhoneAuthProvider.ForceResendingToken token;
+////                            private void resendVerificationCode(phone,
+////                                    token) {
+////
+////                                PhoneAuthProvider.getInstance().verifyPhoneNumber(
+////                                        phone,        // Phone number to verify
+////                                        60,                 // Timeout duration
+////                                        TimeUnit.SECONDS,   // Unit of timeout
+////                                        this,               // Activity (for callback binding)
+////                                        mCallbacks,         // OnVerificationStateChangedCallbacks
+////                                        token);             // ForceResendingToken from callbacks
+////                            }
+////                                         ForceResendingToken from callbacks
 //
-                }
+//                            }
+//                        });
+//
+//                }
 
             }
             @Override
@@ -114,6 +115,17 @@ private Button btn2;
 
 
                           }
+            public void onCodeAutoRetrievalTimeOut(String s){
+                btn2.setEnabled(true);
+                btn2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        
+                    }
+                });
+            }
+
+
         };
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
