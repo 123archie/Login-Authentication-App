@@ -71,7 +71,9 @@ String password;
            confirmPassword();
            if(validateEmail() && validatePassword() && confirmPassword()){
            Intent intent=new Intent(MainActivity.this, LoginactivityOtpverificationActivity.class);
-
+           intent.putExtra("name",name);
+           intent.putExtra("email",email);
+           intent.putExtra("password",password);
            intent.putExtra("phone",ccp.getFullNumberWithPlus().trim());
            
            startActivity(intent);

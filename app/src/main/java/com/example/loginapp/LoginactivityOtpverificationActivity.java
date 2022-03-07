@@ -1,11 +1,14 @@
 package com.example.loginapp;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 
@@ -25,7 +29,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class LoginactivityOtpverificationActivity extends AppCompatActivity {
@@ -38,8 +47,10 @@ private PinView pinView;
 private Button btn2;
   String phone;
   String otpid;
-    FirebaseAuth mAuth;
-     @Override
+  String userID;
+  FirebaseAuth mAuth;
+    FirebaseFirestore fstore;
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginactivity_otpverification);
@@ -48,9 +59,12 @@ private Button btn2;
         btn=findViewById(R.id.button4);
         btn2=findViewById(R.id.button2);
         mAuth=FirebaseAuth.getInstance();
+        fstore=FirebaseFirestore.getInstance();
         btn2.setEnabled(false);
         phone= getIntent().getStringExtra("phone");
-
+       name=getIntent().getStringExtra("name");
+       email=getIntent().getStringExtra("email");
+       password=getIntent().getStringExtra("password");
         initiate_otp();
          btn.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -147,7 +161,24 @@ private Button btn2;
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            mAuth.createUserWithEmailAndPassword(email,password);
+                            userID=mAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference=fstore.collection("users").document(userID);
+                            Map<String, Object> user=new HashMap<>();
+                            user.put("name",name);
+                            user.put("email",email);
+                            user.put("password",password);
+                            user.put("phone",phone);
+//                            phone= getIntent().getStringExtra("phone");
+//                            name=getIntent().getStringExtra("name");
+//                            email=getIntent().getStringExtra("email");
+//                            password=getIntent().getStringExtra("password");
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                  Log.d(TAG,"User Profile is created for"+userID);
+                                }
+                            });
                             Intent intent=new Intent(LoginactivityOtpverificationActivity.this,Dashboard.class);
                             startActivity(intent);
 
