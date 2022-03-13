@@ -29,12 +29,13 @@ public class Dashboard extends AppCompatActivity {
         }
 
         private void signOutUser() {
-            Intent intent=new Intent(Dashboard.this, Login.class);
+
             FirebaseUser mUser=mAuth.getCurrentUser();
             if(mUser==null){
-                Toast.makeText(Dashboard.this, "No", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(Dashboard.this, Login.class);
+                startActivity(intent);
             }
-            startActivity(intent);
+
         }
     });}
 }
