@@ -61,7 +61,7 @@ private Button btn2;
         btn2=findViewById(R.id.button2);
         mAuth=FirebaseAuth.getInstance();
         fstore=FirebaseFirestore.getInstance();
-        btn2.setEnabled(false);
+
         phone= getIntent().getStringExtra("phone");
        name=getIntent().getStringExtra("name");
        email=getIntent().getStringExtra("email");
