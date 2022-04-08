@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10sp"
-                android:layout_marginTop="20sp"
+                android:layout_marginTop="40sp"
                 android:text="Email"
                 android:textColor="#070707"
                 android:textSize="16sp" />
@@ -85,15 +85,21 @@
                     android:ems="10"
                     android:inputType="textPassword"
                     android:textSize="20sp" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="372dp"
-                android:layout_height="131dp"
-                android:layout_marginLeft="20sp"
-                android:layout_marginTop="30sp"
-                app:srcCompat="@drawable/recaptcha" />
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="365dp"
+                android:layout_height="76dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100sp"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/holo_orange_dark"
+                android:gravity="center"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textSize="27sp" />
 
 
         </LinearLayout>

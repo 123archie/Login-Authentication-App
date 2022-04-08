@@ -26,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -177,6 +178,7 @@ private Button btn2;
                                 @Override
                                 public void onSuccess(Void unused) {
                                   Log.d(TAG,"User Profile is created for"+userID);
+                                    FirebaseUser user=task.getResult().getUser();
                                 }
                             });
                             Intent intent=new Intent(LoginactivityOtpverificationActivity.this,Dashboard.class);

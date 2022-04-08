@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.regex.Pattern;
 
@@ -54,7 +55,7 @@ String password;
         editTextTextPassword2=findViewById(R.id.editTextTextPassword2);
         textView10=findViewById(R.id.textView10);
         ccp=findViewById(R.id.ccp);
-
+        FirebaseAuth mAuth= FirebaseAuth.getInstance();
 
         editTextNumber=findViewById(R.id.editTextNumber);
         ccp.registerCarrierNumberEditText(editTextNumber);
