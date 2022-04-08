@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 String email;
 String password;
+String password_c;
     private static  final Pattern PASSWORD_PATTERN=
         Pattern.compile("^" +
                 "(?=.*[0-9])" +
@@ -71,6 +73,7 @@ String password;
            validatePassword();
            confirmPassword();
            if(validateEmail() && validatePassword() && confirmPassword()){
+               if(password.equals(password_c)){
            Intent intent=new Intent(MainActivity.this, LoginactivityOtpverificationActivity.class);
            intent.putExtra("name",name);
            intent.putExtra("email",email);
@@ -78,8 +81,10 @@ String password;
            intent.putExtra("phone",ccp.getFullNumberWithPlus().trim());
            
            startActivity(intent);
-
-            }}
+           finish();
+            }else{
+                   Toast.makeText(MainActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();}
+           }}
 
         });}
 
@@ -108,8 +113,8 @@ String password;
         return  false;}
  }
     private boolean confirmPassword(){
-        String passwordc=editTextTextPassword2.getText().toString();
-        if(PASSWORD_PATTERN.matcher(passwordc).matches())
+        password_c=editTextTextPassword2.getText().toString();
+        if(PASSWORD_PATTERN.matcher(password_c).matches())
         {
             textView10.setText("");
             return true;
