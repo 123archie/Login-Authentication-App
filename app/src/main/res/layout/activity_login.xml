@@ -120,11 +120,13 @@
 
                 <TextView
                     android:id="@+id/textView18"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="0sp"
                     android:layout_marginTop="15sp"
                     android:text="Create One"
+
                     android:textColor="#009688"
                     android:textSize="16sp" />
             </LinearLayout>

@@ -66,6 +66,7 @@ private Button btn2;
        name=getIntent().getStringExtra("name");
        email=getIntent().getStringExtra("email");
        password=getIntent().getStringExtra("password");
+       btn2.setEnabled(false);
         initiate_otp();
          btn.setOnClickListener(new View.OnClickListener() {
              @Override
@@ -99,28 +100,7 @@ private Button btn2;
                     Toast.makeText(LoginactivityOtpverificationActivity.this, "The SMS quota for the plan has been exceeded", Toast.LENGTH_SHORT).show();
                 }
 
-//                else {
-//                    btn2.setEnabled(true);
-//                    btn2.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {PhoneAuthProvider.ForceResendingToken token;
-////                            private void resendVerificationCode(phone,
-////                                    token) {
-////
-////                                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-////                                        phone,        // Phone number to verify
-////                                        60,                 // Timeout duration
-////                                        TimeUnit.SECONDS,   // Unit of timeout
-////                                        this,               // Activity (for callback binding)
-////                                        mCallbacks,         // OnVerificationStateChangedCallbacks
-////                                        token);             // ForceResendingToken from callbacks
-////                            }
-////                                         ForceResendingToken from callbacks
-//
-//                            }
-//                        });
-//
-//                }
+
 
             }
             @Override
@@ -135,6 +115,7 @@ private Button btn2;
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        initiate_otp();
                         
                     }
                 });
@@ -170,10 +151,6 @@ private Button btn2;
                             user.put("email",email);
                             user.put("password",password);
                             user.put("phone",phone);
-//                            phone= getIntent().getStringExtra("phone");
-//                            name=getIntent().getStringExtra("name");
-//                            email=getIntent().getStringExtra("email");
-//                            password=getIntent().getStringExtra("password");
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
@@ -183,7 +160,7 @@ private Button btn2;
                             });
                             Intent intent=new Intent(LoginactivityOtpverificationActivity.this,Dashboard.class);
                             startActivity(intent);
-
+                              finish();
                         } else {
                             Toast.makeText(LoginactivityOtpverificationActivity.this, "OTP Verification failed", Toast.LENGTH_SHORT).show();
                             }

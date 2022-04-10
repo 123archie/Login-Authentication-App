@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +25,7 @@ public class Login extends AppCompatActivity {
  private Button button;
     private String Email;
     private String Password;
+    private TextView textViewcreateOne;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,19 @@ public class Login extends AppCompatActivity {
         password=findViewById(R.id.editTextTextPassword3);
         mAuth= FirebaseAuth.getInstance();
       button=findViewById(R.id.button5);
-        button.setOnClickListener(new View.OnClickListener() {
+      textViewcreateOne=findViewById(R.id.textView18);
+
+      textViewcreateOne.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              Intent intent=new Intent(Login.this, MainActivity.class);
+              startActivity(intent);
+          }
+      });
+        textViewcreateOne.setText(Html.fromHtml("<font color='blue'><u>Create One</u></font>"));
+
+
+      button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String EMAIL=email.getText().toString();
@@ -48,6 +64,7 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+
 //       String EMAIL=email.getText().toString();
 //       String PASS=password.getText().toString();
 //       Email=getIntent().getStringExtra("email");
