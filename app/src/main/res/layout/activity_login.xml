@@ -61,6 +61,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:textColor="#F80E0E" />
+
+            <TextView
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,9 +92,17 @@
                     android:background="@color/white"
                     android:ems="10"
                     android:inputType="textPassword"
+                    android:textColor="#F4584D"
                     android:textSize="20sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10sp"
+                android:textColor="#F80E0E" />
 
             <Button
                 android:id="@+id/button5"

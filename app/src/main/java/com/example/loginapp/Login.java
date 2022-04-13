@@ -1,23 +1,21 @@
 package com.example.loginapp;
 
-import androidx.annotation.NonNull;
+import static android.util.Patterns.EMAIL_ADDRESS;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
+import java.util.regex.Pattern;
 
 public class Login extends AppCompatActivity {
  private EditText email;
@@ -26,17 +24,35 @@ public class Login extends AppCompatActivity {
     private String Email;
     private String Password;
     private TextView textViewcreateOne;
+    private Button btn6;
+    private TextView text23;
+    private TextView text24;
+    private static  final Pattern PASSWORD_PATTERN=
+            Pattern.compile("^" +
+                    "(?=.*[0-9])" +
+                    "(?=.*[a-z])" +
+                    "(?=.*[A-Z])" +
+                    "(?=.*[@#$%^&+=])" +
+                    "(?=\\S+$)" +
+                    ".{8,20}" +
+                    "$");
     FirebaseAuth mAuth;
+    String EMAIL;
+    String PASS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         email=findViewById(R.id.editTextTextEmailAddress2);
+        text23=findViewById(R.id.textView23);
+        text24=findViewById(R.id.textView25);
         password=findViewById(R.id.editTextTextPassword3);
         mAuth= FirebaseAuth.getInstance();
       button=findViewById(R.id.button5);
       textViewcreateOne=findViewById(R.id.textView18);
+      btn6=findViewById(R.id.button6);
 
       textViewcreateOne.setOnClickListener(new View.OnClickListener() {
           @Override
@@ -51,8 +67,9 @@ public class Login extends AppCompatActivity {
       button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String EMAIL=email.getText().toString();
-                String PASS=password.getText().toString();
+                validateEmail();
+                validatePassword();
+                if(validateEmail() && validatePassword()){
                 Email=getIntent().getStringExtra("email");
                 Password=getIntent().getStringExtra("password");
                 if(Email.equals(EMAIL) && Password.equals(PASS)){
@@ -62,51 +79,44 @@ public class Login extends AppCompatActivity {
                 else{
                     Toast.makeText(Login.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            }}
 
-//       String EMAIL=email.getText().toString();
-//       String PASS=password.getText().toString();
-//       Email=getIntent().getStringExtra("email");
-//       Password=getIntent().getStringExtra("password");
-//       if(EMAIL.equals(Email) && PASS.equals(Password)){
-//             login();
-//           mAuth.signInWithEmailAndPassword(Email,Password)
-//                   .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                       @Override
-//                       public void onComplete(@NonNull Task<AuthResult> task) {
-//                           if (task.isSuccessful()) {
-//                               // Sign in success, update UI with the signed-in user's information
-//
-//                               FirebaseUser user = mAuth.getCurrentUser();
-//                               user=task.getResult().getUser();
-//                           } else {
-//                               // If sign in fails, display a message to the user.
-//
-//                               Toast.makeText(Login.this, "Authentication failed.",
-//                                       Toast.LENGTH_SHORT).show();
-////                               updateUI(null);
-//                           }
-//                       }
-//                   });
-//             Intent intent=new Intent(Login.this, Dashboard.class);
-//             startActivity(intent);
-//           }
-//       else {
-//           Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
-//       }
-//       }
-//
-//    private void login() {
-//
-////        public void onStart()   {
-//            super.onStart();
-//            FirebaseUser currentUser = mAuth.getCurrentUser();
-//            if(currentUser != null){
-//                currentUser.reload();
-//            }
-//
-//
-//    }
+          private boolean validatePassword() {
+             PASS=password.getText().toString();
+              if(PASSWORD_PATTERN.matcher(PASS).matches())
+              {
+                  text24.setText("");
+                  return true;
+              }
+        else{
+                  text24.setText("Password should contain at least 8 characters including atleast 1 digit, 1 uppercase letter, 1 lowercase letter, 1 special character and should not contain any white spaces.");
+                  return  false;}
+
+          }
+
+          private boolean validateEmail() {
+             EMAIL=email.getText().toString();
+              if(EMAIL_ADDRESS.matcher(EMAIL).matches()){
+                  text23.setText("");
+                  return true;
+              }
+              else{
+                  text23.setText("Invalid Email");
+                  return false;
+              }
+
+          }
+      });
+      btn6.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+                    Intent intent=new Intent(Login.this, Emaillinklogin.class);
+                    startActivity(intent);
+
+          }
+      });
+
+
+
 }}
 
