@@ -42,9 +42,9 @@ String email;
                         ActionCodeSettings.newBuilder()
                                 // URL you want to redirect back to. The domain (www.example.com) for this
                                 // URL must be whitelisted in the Firebase Console.
-                                .setUrl("https://loginauthenticate.page.link/zXbp")
+                                .setUrl("https://loginauthenticate.page.link")
                                 .setHandleCodeInApp(true)
-//                                .setIOSBundleId("com.example.ios")
+                                .setIOSBundleId("com.example.ios")
                                 .setAndroidPackageName(
                                         "com.example.loginapp",
                                         true, /* installIfNotAvailable */
