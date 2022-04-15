@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C3E9FA"
     tools:context=".LoginactivityOtpverificationActivity">
 
     <ScrollView
@@ -43,25 +42,25 @@
                 android:textColor="#070707"
                 android:textSize="20sp" />
 
+
             <com.chaos.view.PinView
                 android:id="@+id/pinView"
                 style="@style/PinWidget.PinView"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:inputType="number"
+                android:inputType="numberPassword"
                 android:itemBackground="#EADFDF"
                 android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textSize="14sp"
+                app:hideLineWhenFilled="true"
                 app:itemCount="6"
                 app:itemHeight="60dp"
                 app:itemSpacing="10.5dp">
 
             </com.chaos.view.PinView>
-
 
             <TextView
                 android:id="@+id/textView13"

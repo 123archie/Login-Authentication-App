@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Login App</string>
-
+    <string name="submitText">%1$s</string>
+    <string name="this_link">Create One</string>
 </resources>
