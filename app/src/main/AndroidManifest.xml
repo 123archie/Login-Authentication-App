@@ -6,9 +6,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/images1_removebg_preview"
         android:label="Login App"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/images1_removebg_preview"
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginApp">
         <activity
