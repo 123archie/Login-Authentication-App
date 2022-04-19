@@ -5,8 +5,10 @@ import static android.util.Patterns.EMAIL_ADDRESS;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,17 +64,20 @@ public class Login extends AppCompatActivity {
           public void onClick(View view) {
               Intent intent=new Intent(Login.this, MainActivity.class);
               startActivity(intent);
-              textViewcreateOne.setUnderline();}
-      });
-//
+              textViewcreateOne.setText(Html.fromHtml("<u>Create One</u>"));
+              }});
+
       button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 validateEmail();
                 validatePassword();
                 if(validateEmail() && validatePassword()){
                 Email=getIntent().getStringExtra("email");
                 Password=getIntent().getStringExtra("password");
+
+
                 if(Email.equals(EMAIL) && Password.equals(PASS)){
                   Intent intent=new Intent(Login.this, Dashboard.class);
                   startActivity(intent);
