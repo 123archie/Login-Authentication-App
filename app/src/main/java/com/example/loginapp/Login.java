@@ -77,11 +77,10 @@ public class Login extends AppCompatActivity {
                 Email=getIntent().getStringExtra("email");
                 Password=getIntent().getStringExtra("password");
 
-
                 if(Email.equals(EMAIL) && Password.equals(PASS)){
                   Intent intent=new Intent(Login.this, Dashboard.class);
                   startActivity(intent);
-                   finish();}
+                    finish();}
                 else{
                     Toast.makeText(Login.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                 }

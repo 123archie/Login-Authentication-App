@@ -25,7 +25,7 @@ public class Dashboard extends AppCompatActivity {
         public void onClick(View view) {
             mAuth.signOut();
             signOutUser();
-
+finish();
         }
 
         private void signOutUser() {

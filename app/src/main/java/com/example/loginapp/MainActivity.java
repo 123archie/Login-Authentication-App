@@ -81,7 +81,7 @@ String password_c;
            intent.putExtra("phone",ccp.getFullNumberWithPlus().trim());
            
            startActivity(intent);
-           finish();
+                   finish();
             }else{
                    Toast.makeText(MainActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();}
            }}

@@ -58,7 +58,8 @@ String email;
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(Emaillinklogin.this, "Email sent", Toast.LENGTH_SHORT).show();
-                                        verifyandsignin(); }
+                                        verifyandsignin();
+                                   }
 else{
                                         Toast.makeText(Emaillinklogin.this, "no", Toast.LENGTH_SHORT).show();
                                     }

@@ -160,7 +160,7 @@ private Button btn2;
                             });
                             Intent intent=new Intent(LoginactivityOtpverificationActivity.this,Dashboard.class);
                             startActivity(intent);
-                              finish();
+finish();
                         } else {
                             Toast.makeText(LoginactivityOtpverificationActivity.this, "OTP Verification failed", Toast.LENGTH_SHORT).show();
                             }
