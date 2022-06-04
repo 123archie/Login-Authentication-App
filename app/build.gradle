@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.android.internal.application'
     id 'com.google.gms.google-services'
 }
 
@@ -7,11 +8,13 @@ android {
     compileSdk 32
 
     defaultConfig {
+
         applicationId "com.example.loginapp"
         minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
