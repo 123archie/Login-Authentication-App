@@ -70,12 +70,12 @@ public class Login extends AppCompatActivity {
       button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 validateEmail();
                 validatePassword();
                 if(validateEmail() && validatePassword()){
                 Email=getIntent().getStringExtra("email");
                 Password=getIntent().getStringExtra("password");
+
 
                 if(Email.equals(EMAIL) && Password.equals(PASS)){
                   Intent intent=new Intent(Login.this, Dashboard.class);
