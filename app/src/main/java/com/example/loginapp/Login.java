@@ -5,7 +5,6 @@ import static android.util.Patterns.EMAIL_ADDRESS;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 
 import java.util.regex.Pattern;
 
@@ -40,8 +40,9 @@ public class Login extends AppCompatActivity {
                     ".{8,20}" +
                     "$");
     FirebaseAuth mAuth;
-    String EMAIL;
-    String PASS;
+
+    private String EMAIL;
+    private String PASS;
 
 
     @Override
@@ -70,12 +71,19 @@ public class Login extends AppCompatActivity {
       button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                EMAIL=email.getText().toString();
+
+                PASS=password.getText().toString();
+                Log.d("TAG","Value of EMAIL:"+EMAIL);
+                Log.d("TAG","Value of PASS:"+PASS);
+
                 validateEmail();
                 validatePassword();
                 if(validateEmail() && validatePassword()){
-                Email=getIntent().getStringExtra("email");
-                Password=getIntent().getStringExtra("password");
+                 Email=
 
+                Log.d("TAG","Value of Email:"+Email);
+                Log.d("TAG","Value of Password:"+Password);
 
                 if(Email.equals(EMAIL) && Password.equals(PASS)){
                   Intent intent=new Intent(Login.this, Dashboard.class);
@@ -103,7 +111,7 @@ public class Login extends AppCompatActivity {
 
 }
     private boolean validatePassword() {
-        PASS=password.getText().toString();
+
         if(PASSWORD_PATTERN.matcher(PASS).matches())
         {
             text24.setText("");
@@ -116,7 +124,7 @@ public class Login extends AppCompatActivity {
     }
 
     private boolean validateEmail() {
-        EMAIL=email.getText().toString();
+
         if(EMAIL_ADDRESS.matcher(EMAIL).matches()){
             text23.setText("");
             return true;
@@ -126,5 +134,6 @@ public class Login extends AppCompatActivity {
             return false;
         }
 
-    }}
+    }
+}
 

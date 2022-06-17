@@ -12,11 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.safetynet.SafetyNet;
+import com.google.android.gms.safetynet.SafetyNetApi;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +48,7 @@ String password_c;
     private TextView textView10;
     com.hbb20.CountryCodePicker ccp;
     private EditText editTextNumber;
+    private Button button1;
     private Button button;
 
 
@@ -64,6 +72,32 @@ String password_c;
 
 
         button=findViewById(R.id.button);
+//        button1=findViewById(R.id.button9);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SafetyNet.getClient(MainActivity.this).verifyWithRecaptcha("6LeNalQgAAAAAK_DAApY3TzbhNHd9gP-L0psiO1f").addOnSuccessListener((Executor) MainActivity.this,
+                        new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
+                            @Override
+                            public void onSuccess(SafetyNetApi.RecaptchaTokenResponse recaptchaTokenResponse) {
+                                String userResponseToken=recaptchaTokenResponse.getTokenResult();
+                                if(!userResponseToken.isEmpty()){
+
+                                }
+                            }
+                        }).addOnFailureListener((Executor) MainActivity.this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        if(e instanceof ApiException) {
+                            ApiException apiException = (ApiException) e;
+                            int statusCode = apiException.getStatusCode();
+                        }else{
+                            Toast.makeText(MainActivity.this, "ReCaptcha failed", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
