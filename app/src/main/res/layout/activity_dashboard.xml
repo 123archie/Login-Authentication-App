@@ -7,27 +7,25 @@
     android:layout_gravity="center"
     android:background="#BCE5F4"
     tools:context=".Dashboard">
-
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Welcome to Dashboard"
+        android:text="@string/welcome"
         android:textColor="#F44336"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:height="70dp"
         android:backgroundTint="#009688"
-        android:text="LOGOUT"
+        android:text="@string/logout"
         android:textAllCaps="true"
         android:textColor="#FDFCFC"
         android:textSize="26sp"

@@ -1,35 +1,24 @@
 package com.example.loginapp;
-
 import static android.util.Patterns.EMAIL_ADDRESS;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-
-import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.safetynet.SafetyNet;
-import com.google.android.gms.safetynet.SafetyNetApi;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
-
 public class MainActivity extends AppCompatActivity {
-String email;
-String password;
-String password_c;
+static String email;
+static String password;
+static String password_c;
+    public static String return_email(){
+        return email;
+    }
+    public static String return_password(){
+        return password;
+    }
     private static  final Pattern PASSWORD_PATTERN=
         Pattern.compile("^" +
                 "(?=.*[0-9])" +
@@ -47,16 +36,12 @@ String password_c;
     private EditText editTextTextPassword2;
     private TextView textView10;
     com.hbb20.CountryCodePicker ccp;
-    private EditText editTextNumber;
-    private Button button1;
-    private Button button;
-
-
+    EditText editTextNumber;
+    Button button;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         editTextTextPersonName3=findViewById(R.id.editTextTextPersonName3);
         editTextTextEmailAddress=findViewById(R.id.editTextTextEmailAddress);
         textView9=findViewById(R.id.textView9);
@@ -65,98 +50,65 @@ String password_c;
         editTextTextPassword2=findViewById(R.id.editTextTextPassword2);
         textView10=findViewById(R.id.textView10);
         ccp=findViewById(R.id.ccp);
-        FirebaseAuth mAuth= FirebaseAuth.getInstance();
-
         editTextNumber=findViewById(R.id.editTextNumber);
         ccp.registerCarrierNumberEditText(editTextNumber);
-
-
         button=findViewById(R.id.button);
-//        button1=findViewById(R.id.button9);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SafetyNet.getClient(MainActivity.this).verifyWithRecaptcha("6LeNalQgAAAAAK_DAApY3TzbhNHd9gP-L0psiO1f").addOnSuccessListener((Executor) MainActivity.this,
-                        new OnSuccessListener<SafetyNetApi.RecaptchaTokenResponse>() {
-                            @Override
-                            public void onSuccess(SafetyNetApi.RecaptchaTokenResponse recaptchaTokenResponse) {
-                                String userResponseToken=recaptchaTokenResponse.getTokenResult();
-                                if(!userResponseToken.isEmpty()){
-
-                                }
-                            }
-                        }).addOnFailureListener((Executor) MainActivity.this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        if(e instanceof ApiException) {
-                            ApiException apiException = (ApiException) e;
-                            int statusCode = apiException.getStatusCode();
-                        }else{
-                            Toast.makeText(MainActivity.this, "ReCaptcha failed", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            String name=editTextTextPersonName3.getText().toString();
-
-           validateEmail();
-           validatePassword();
-           confirmPassword();
-           if(validateEmail() && validatePassword() && confirmPassword()){
-               if(password.equals(password_c)){
-           Intent intent=new Intent(MainActivity.this, LoginactivityOtpverificationActivity.class);
-           intent.putExtra("name",name);
-           intent.putExtra("email",email);
-           intent.putExtra("password",password);
-           intent.putExtra("phone",ccp.getFullNumberWithPlus().trim());
-           
-           startActivity(intent);
-                   finish();
-            }else{
-                   Toast.makeText(MainActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();}
-           }}
-
-        });}
-
+        button.setOnClickListener(view -> {
+        String name=editTextTextPersonName3.getText().toString();
+        validateEmail();
+        validatePassword();
+        confirmPassword();
+        if(validateEmail() && validatePassword() && confirmPassword()){
+           if(password.equals(password_c)){
+        Intent intent=new Intent(MainActivity.this, LoginactivityOtpverificationActivity.class);
+        intent.putExtra("name",name);
+        intent.putExtra("email",email);
+        intent.putExtra("password",password);
+        intent.putExtra("phone",ccp.getFullNumberWithPlus().trim());
+        Log.d("TAG","email: "+email);
+        Log.d("TAG","password: "+password);
+        startActivity(intent);
+               finish();
+        }
+           else{
+               Toast.makeText(MainActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();}
+       }});
+    }
         private boolean validateEmail()
-    {
+        {
            email=editTextTextEmailAddress.getText().toString();
             if(EMAIL_ADDRESS.matcher(email).matches()){
                textView9.setText("");
                return true;
-
         }
-            else{
+            else
+            {
                  textView9.setText("Invalid Email");
                  return false;
             }
     }
- private boolean validatePassword(){
-     password = editTextTextPassword.getText().toString();
-     if(PASSWORD_PATTERN.matcher(password).matches())
-        {
+    private boolean validatePassword(){
+         password = editTextTextPassword.getText().toString();
+         if(PASSWORD_PATTERN.matcher(password).matches())
+         {
          textView4.setText("");
          return true;
         }
         else{
-          textView4.setText("Password should contain at least 8 characters including atleast 1 digit, 1 uppercase letter, 1 lowercase letter, 1 special character and should not contain any white spaces.");
-        return  false;}
+        textView4.setText("Password should contain at least 8 characters including atleast 1 digit, 1 uppercase letter, 1 lowercase letter, 1 special character and should not contain any white spaces.");
+        return  false;
+        }
  }
-    private boolean confirmPassword(){
-        password_c=editTextTextPassword2.getText().toString();
-        if(PASSWORD_PATTERN.matcher(password_c).matches())
-        {
+     private boolean confirmPassword(){
+         password_c=editTextTextPassword2.getText().toString();
+         if(PASSWORD_PATTERN.matcher(password_c).matches())
+         {
             textView10.setText("");
             return true;
         }
         else{
             textView10.setText("Password should contain at least 8 characters including atleast 1 digit, 1 uppercase letter, 1 lowercase letter, 1 special character and should not contain any white spaces.");
-            return  false;}
+            return  false;
+        }
     }
-
-
 }
