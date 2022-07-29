@@ -59,6 +59,7 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
             {
                 Toast.makeText(LoginactivityOtpverificationActivity.this, "Verification Successful", Toast.LENGTH_SHORT).show();
                 PhoneAuthCredential credential=PhoneAuthProvider.getCredential(otpid, String.valueOf(pinView));
+                Log.d("TAG","credential: "+credential);
                 signInWithPhoneAuthCredential(credential);}
         });
     }
@@ -96,9 +97,11 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(LoginactivityOtpverificationActivity.this, task -> {
+        Log.d("TAG","msg: signingin");
+        mAuth.signInWithCredential(credential).addOnCompleteListener(LoginactivityOtpverificationActivity.this, task -> {
+                    Log.d("TAG","mAuth: "+mAuth);
                     if (task.isSuccessful()) {
+                        Log.d("TAG","signing in successful");
                         mAuth.createUserWithEmailAndPassword(email, password);
                         userID = mAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = fstore.collection("users").document(userID);
