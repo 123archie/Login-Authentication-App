@@ -1,5 +1,4 @@
 package com.example.loginapp;
-import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -10,8 +9,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.chaos.view.PinView;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
@@ -98,13 +99,15 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
     }
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         Log.d("TAG","msg: signingin");
-        mAuth.signInWithCredential(credential).addOnCompleteListener(LoginactivityOtpverificationActivity.this, task -> {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(LoginactivityOtpverificationActivity.this, task -> {
                     Log.d("TAG","mAuth: "+mAuth);
                     if (task.isSuccessful()) {
                         Log.d("TAG","signing in successful");
+
                         mAuth.createUserWithEmailAndPassword(email, password);
                         userID = mAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = fstore.collection("users").document(userID);
+                        DocumentReference documentReference = fstore.collection("users").document();
                         Map<String, Object> user = new HashMap<>();
                         user.put("name", name);
                         user.put("email", email);
@@ -113,7 +116,7 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
                         documentReference.set(user).addOnSuccessListener(new OnSuccessListener<>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Log.d(TAG, "User Profile is created for" + userID);
+                                Log.d("TAG", "User Profile is created for" + userID);
                                 FirebaseUser user = task.getResult().getUser();
                             }
                         });

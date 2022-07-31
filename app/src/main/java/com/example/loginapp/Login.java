@@ -5,12 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.regex.Pattern;
 public class Login extends AppCompatActivity {
     private EditText email;
@@ -20,6 +25,7 @@ public class Login extends AppCompatActivity {
     Button btn6;
     private TextView text23;
     private TextView text24;
+    FirebaseFirestore fstore;
     private static  final Pattern PASSWORD_PATTERN=
             Pattern.compile("^" +
                     "(?=.*[0-9])" +
@@ -32,6 +38,8 @@ public class Login extends AppCompatActivity {
     FirebaseAuth mAuth;
     private String EMAIL;
     private String PASS;
+    private Task<DocumentSnapshot> users;
+
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +57,9 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
             textViewcreateOne.setText(Html.fromHtml("<u>Create One</u>"));
             });
+      users=fstore.collection("users").document().get();
+      DocumentReference documentReference_email=users.getResult().getDocumentReference("email");
+      DocumentReference documentReference_password=users.getResult().getDocumentReference("password");
       button5.setOnClickListener(view -> {
           EMAIL=email.getText().toString();
           PASS=password.getText().toString();
@@ -57,9 +68,9 @@ public class Login extends AppCompatActivity {
           validateEmail();
           validatePassword();
           if(validateEmail() && validatePassword()){
-              Log.d("TAG","Value of Email: "+MainActivity.return_email());
-              Log.d("TAG","Value of Password:"+MainActivity.return_password());
-          if(MainActivity.return_email().equals(EMAIL) && MainActivity.return_password().equals(PASS)){
+              Log.d("TAG","Value of Email: "+documentReference_email);
+              Log.d("TAG","Value of Password:"+documentReference_password);
+          if(documentReference_email.equals(EMAIL) && documentReference_password.equals(PASS)){
             Intent intent=new Intent(Login.this, Dashboard.class);
             startActivity(intent);
               finish();}
