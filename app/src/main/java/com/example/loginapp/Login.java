@@ -12,10 +12,11 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
+
 import java.util.regex.Pattern;
 public class Login extends AppCompatActivity {
     private EditText email;
@@ -57,9 +58,10 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
             textViewcreateOne.setText(Html.fromHtml("<u>Create One</u>"));
             });
-      users=fstore.collection("users").document().get();
-      DocumentReference documentReference_email=users.getResult().getDocumentReference("email");
-      DocumentReference documentReference_password=users.getResult().getDocumentReference("password");
+
+//      users=fstore.collection("users").document().get();
+//      DocumentReference documentReference_email=users.getResult().getDocumentReference("email");
+//      DocumentReference documentReference_password=users.getResult().getDocumentReference("password");
       button5.setOnClickListener(view -> {
           EMAIL=email.getText().toString();
           PASS=password.getText().toString();
@@ -68,9 +70,9 @@ public class Login extends AppCompatActivity {
           validateEmail();
           validatePassword();
           if(validateEmail() && validatePassword()){
-              Log.d("TAG","Value of Email: "+documentReference_email);
-              Log.d("TAG","Value of Password:"+documentReference_password);
-          if(documentReference_email.equals(EMAIL) && documentReference_password.equals(PASS)){
+              Log.d("TAG","Value of Email: "+MainActivity.return_email());
+              Log.d("TAG","Value of Password:"+MainActivity.return_password());
+          if(MainActivity.return_email().equals(EMAIL) && MainActivity.return_password().equals(PASS)){
             Intent intent=new Intent(Login.this, Dashboard.class);
             startActivity(intent);
               finish();}
