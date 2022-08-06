@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 static String email;
@@ -38,9 +40,14 @@ static String password_c;
     com.hbb20.CountryCodePicker ccp;
     EditText editTextNumber;
     Button button;
+    FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(user!=null){
+            setContentView(R.layout.activity_dashboard);
+            startActivity(new Intent(this, Dashboard.class));}
+        else{
         setContentView(R.layout.activity_main);
         editTextTextPersonName3=findViewById(R.id.editTextTextPersonName3);
         editTextTextEmailAddress=findViewById(R.id.editTextTextEmailAddress);
@@ -73,7 +80,7 @@ static String password_c;
            else{
                Toast.makeText(MainActivity.this, "Passwords don't match", Toast.LENGTH_SHORT).show();}
        }});
-    }
+    }}
         private boolean validateEmail()
         {
            email=editTextTextEmailAddress.getText().toString();
