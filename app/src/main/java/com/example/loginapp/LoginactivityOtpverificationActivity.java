@@ -37,6 +37,10 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
     String userID;
     FirebaseAuth mAuth;
     FirebaseFirestore fstore;
+    int k;
+    String Em[];
+    String Pa[];
+
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +127,15 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
                         Intent intent = new Intent(LoginactivityOtpverificationActivity.this, Dashboard.class);
                         startActivity(intent);
                         finish();
+
+
+                        Em[k]=email;
+                        Pa[k]=password;
+                        k++;
+                        user.put("email_array",Em);
+                        user.put("password_array",Pa);
+                        user.put("k",k);
+
                     } else {
                         Toast.makeText(LoginactivityOtpverificationActivity.this, "OTP Verification failed", Toast.LENGTH_SHORT).show();
                     }

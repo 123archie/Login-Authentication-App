@@ -12,12 +12,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Source;
 
+import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.regex.Pattern;
 public class Login extends AppCompatActivity {
     private EditText email;
@@ -41,7 +43,9 @@ public class Login extends AppCompatActivity {
     private String EMAIL;
     private String PASS;
     private Task<DocumentSnapshot> users;
-
+   String Em[];
+   String Pa[];
+   int i,k=0;
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,12 +63,17 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
             textViewcreateOne.setText(Html.fromHtml("<u>Create One</u>"));
             });
-//      users=fstore.collection("users").document().get();
-//      DocumentReference documentReference_email=users.getResult().getDocumentReference("email");
-//      DocumentReference documentReference_password=users.getResult().getDocumentReference("password");
-        FieldPath fieldPath_email=fstore.collection("users").document().;
-
       button5.setOnClickListener(view -> {
+
+
+          k=getIntent().getIntExtra("k",);
+          Log.d("TAG","Value of k: "+k);
+          for(i=0;i<k;i++){
+          Em[i]=getIntent().getStringExtra("email_array");
+          Pa[i]=getIntent().getStringExtra("password_array");
+          }
+
+
           EMAIL=email.getText().toString();
           PASS=password.getText().toString();
           Log.d("TAG","Value of EMAIL:"+EMAIL);
@@ -72,9 +81,12 @@ public class Login extends AppCompatActivity {
           validateEmail();
           validatePassword();
           if(validateEmail() && validatePassword()){
-              Log.d("TAG","Value of Email: "+MainActivity.return_email());
-              Log.d("TAG","Value of Password:"+MainActivity.return_password());
-          if(MainActivity.return_email().equals(EMAIL) && MainActivity.return_password().equals(PASS)){
+              Log.d("TAG","validation");
+              for(i=0;i<k;i++){
+                  Log.d("TAG","Value of i: "+i);
+//          if(MainActivity.return_email().equals(EMAIL) && MainActivity.return_password().equals(PASS))
+                  if(Em[i].equals(EMAIL) && Pa[i].equals("PASS"))
+          {
             Intent intent=new Intent(Login.this, Dashboard.class);
             startActivity(intent);
               finish();}
@@ -82,7 +94,7 @@ public class Login extends AppCompatActivity {
               Toast.makeText(Login.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
           }
       }
-      });
+      }});
       btn6.setOnClickListener(view -> {
                 Intent intent=new Intent(Login.this, Emaillinklogin.class);
                 startActivity(intent);
