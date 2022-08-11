@@ -8,11 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.chaos.view.PinView;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,10 +34,6 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
     String userID;
     FirebaseAuth mAuth;
     FirebaseFirestore fstore;
-    int k;
-    String Em[];
-    String Pa[];
-
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +80,7 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
             public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
                  otpid=s;
                           }
-            public void onCodeAutoRetrievalTimeOut(String s){
+            public void onCodeAutoRetrievalTimeOut(@NonNull String s){
                 btn2.setEnabled(true);
                 btn2.setOnClickListener(view -> initiate_otp());
             }
@@ -108,7 +101,6 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
                     Log.d("TAG","mAuth: "+mAuth);
                     if (task.isSuccessful()) {
                         Log.d("TAG","signing in successful");
-
                         mAuth.createUserWithEmailAndPassword(email, password);
                         userID = mAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = fstore.collection("users").document();
@@ -117,26 +109,15 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
                         user.put("email", email);
                         user.put("password", password);
                         user.put("phone", phone);
-                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<>() {
-                            @Override
-                            public void onSuccess(Void unused) {
-                                Log.d("TAG", "User Profile is created for" + userID);
-                                FirebaseUser user = task.getResult().getUser();
-                            }
+                        documentReference.set(user).addOnSuccessListener(unused -> {
+                            Log.d("TAG", "User Profile is created for" + userID);
+                            FirebaseUser user1 = task.getResult().getUser();
                         });
                         Intent intent = new Intent(LoginactivityOtpverificationActivity.this, Dashboard.class);
                         startActivity(intent);
                         finish();
-
-
-                        Em[k]=email;
-                        Pa[k]=password;
-                        k++;
-                        user.put("email_array",Em);
-                        user.put("password_array",Pa);
-                        user.put("k",k);
-
-                    } else {
+                    }
+                    else {
                         Toast.makeText(LoginactivityOtpverificationActivity.this, "OTP Verification failed", Toast.LENGTH_SHORT).show();
                     }
                 });
