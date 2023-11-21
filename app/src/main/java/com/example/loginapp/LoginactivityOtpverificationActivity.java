@@ -85,6 +85,7 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
                 btn2.setOnClickListener(view -> initiate_otp());
             }
         };
+        Log.d("PhoneNumber: ", "Phone"+phone);
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber(phone)
@@ -93,6 +94,7 @@ public class LoginactivityOtpverificationActivity extends AppCompatActivity {
                         .setCallbacks(mCallbacks)
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+        Log.d("PhoneAuth: ", "PhoneAuth"+options);
     }
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
         Log.d("TAG","msg: signingin");
